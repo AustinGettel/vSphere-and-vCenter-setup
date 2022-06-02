@@ -1,5 +1,5 @@
 # vSphere-and-vCenter-setup
-Configuring vSphere plus installing a vCenter Server as your first VM
+<b>Configuring vSphere and vCenter plus installing your first VM</b>
 
 You'll need to start by downloading VMWare vSphere and vCenter from VMware's wewbsite. Google download vmware vsphere to find the downloads page. Download VMware vSphere Hypervisor (ESXi) 7.0U3d; this is the installer for ESXi, the hypervisor that we need to install first. Also download VMware vCenter Server 7.0U3e, we'll use this later.
 
