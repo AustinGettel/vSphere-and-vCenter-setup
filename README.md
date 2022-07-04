@@ -13,6 +13,8 @@ The nextg step is to install it in your hardware. I'm running an older workstati
 
 <img src="https://user-images.githubusercontent.com/106196315/171532727-62e31444-2e69-4f68-b15c-8e6da6b7918e.png" width="max" height="max" />
 
+<h3>Configuring ESXi</h3>
+
 I'm going to start by changing the name. I've already set it to VirtualHome, so lets change it to virtualAustin. Start by clicking on Networking.
 
 <img src="https://user-images.githubusercontent.com/106196315/171538494-6e80d213-3c0e-42cb-927c-92865f88729a.png" width="1000" height="600" />
@@ -49,6 +51,9 @@ This is a good time to update your licensing for VMWare while we're already in t
 If you skip this step, just remember all these features are only enabled because you're in Evaluation mode, and that might get hairy once it expires for you.
 
 <!---here comes something really hard, oh boy--->
+
+<h3>A Quick Side Note About ESXi Networking</h3>
+
 Okay, real quick, lets talk about networking. Select Networking, and go to the VMkernel NICs tab. VMkernels are the way we can set up, and control, virtual Network Interface Cards, or the virtual IP, for our virtual machines that we're going to run, but they can do so much more. For a home lab, you might not ever want to set up more than 1, and if you'd like to enable all the features, just highlight it, and click Edit settings. 
 
 <img src="https://user-images.githubusercontent.com/106196315/171544315-c9f43460-1bac-400a-8340-14c6b5ab96c1.png" width="600" height="400" />
@@ -62,6 +67,8 @@ Earlier we set up [Cloudflare's DNS](https://www.cloudflare.com/), but in a futu
 <b>WE'RE READY TO DEPLOY SOME VIRTUAL MACHINES!</B>
 
 <!---that felt good--->
+
+<h3>vCenter</h3>
 
 Because this lab is about getting vSphere and vCenter set up, we're going to start with vCenter. Without AD on vCenter will have all local accounts at first. If you don't already have vCenter downloaded, you'll need to do that now, or skip ahead if you want to skip vCenter. Do you have it downloaded? Good. Go to your downloads folder, and find the VMware-VCSA-all-7.0.3-19717403 file. Now, the easiest method to install this is by using the GUI installer. I'm running Windows 11, but the following steps should be the same for windows 10. Right the file, and select Mount. If Mount is not an option, click show more options, and Mount should be under this list. It may take few minutes to mount. Once complete it will show as a CD/DVD disc under This PC in Windows Explorer.
 
@@ -113,11 +120,13 @@ When it's done, open a new tab in your browser and type in the IP address you se
 
 Did it work? Great! That's it! You now have a homelab with a VM server on it!
 
+<h3>vCenter Cluster</h3>
+
 Now real quick, maybe you have more than 1 ESXi hypervisor, and want them all to work together? I hear you. We need to make a cluster to combine them together. This only take a moment. Right click on the vCenter IP on the left, and hit New DataCenter. Name it whatever you'd like, and leave the IP address alone. 
 
 <img src="https://user-images.githubusercontent.com/106196315/171547485-7b41d756-3a97-48ec-8a0e-851152396361.png" width="500" height="300" />
 
-You're new datacenter in listed on the left under your vCenter IP address. Right click the datacenter, and hit new cluster.
+You're new datacenter is listed on the left under your vCenter IP address. Right click the datacenter, and hit new cluster.
 
 <img src="https://user-images.githubusercontent.com/106196315/171547722-a001fea8-a8f9-4241-90ce-fe5296e62bf8.png" width="500" height="300" />
 
@@ -132,6 +141,8 @@ Now you have a cluster and it's time to add your hosts to it. Right click the cl
 Type in the hosts IP address, root, and your password. Hit the add hosts button to type in more hosts, and do this for all the hosts you want to add. If you gave them all the same password just hit the box for use the same creditionals. Once done, you'll get a security alert. Check all the boxes. now hit next, and finish. It will take a few minutes, but they will start adding the hosts to the cluster, and you can watch the progress at the bottum. The host with vCenter will not be in maintence mode, but the rest will go into maintance. Once the machines are reconfigured, right click on the hosts in maintence mode, hover over maintance mode, and select exit maintenance mode.
 
 On a side note, I would make a cluster now even if you do not have multiple machines, or plan on adding any more machines. vCenter is a server designed to control multiple ESXi hypervisor hosts, and clusters is the way we do that, so this is the easiest way to utilize vCenter. You could also just add the host directly to the DataCenter, without making a cluster.
+
+<h3>Ubuntu Desktop VM</h3>
 
 Now, would you like to deploy a bonus VM? Yeah, lets do it. On the left above the IP for vCenter, click the icon that is 2nd to the left; this is VM View. 
 
